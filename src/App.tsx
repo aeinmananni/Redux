@@ -1,15 +1,20 @@
 import { Provider } from "react-redux";
 import store from "./redux-store";
-import Display from "./components/display";
-import Controls from "./components/controls";
+import { Routes, Route } from "react-router-dom";
+import ControlCounter from "./components/controls";
+import TodoList from "./components/todo-list";
+import Home from "./home";
 
 const App = () => {
   return (
     <>
-      <div>React js</div>
       <Provider store={store}>
-        <Display />
-        <Controls />
+        <Routes>
+          <Route path="/" element={<Home />}>
+            <Route path="" element={<ControlCounter />} />
+            <Route path="/todo-list" element={<TodoList />} />
+          </Route>
+        </Routes>
       </Provider>
     </>
   );
