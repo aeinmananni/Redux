@@ -1,11 +1,17 @@
-import { ButtonHTMLAttributes } from "react";
+import { ButtonHTMLAttributes, forwardRef } from "react";
 
 export type ButtonProps = {
-  text?: string;
+  text?: React.ReactNode;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
 
-const Button = ({ text, ...props }: ButtonProps) => {
-  return <button {...props}>{text}</button>;
-};
+const Button = forwardRef<HTMLButtonElement, ButtonProps>(
+  ({ text, ...props }, ref) => {
+    return (
+      <button ref={ref} {...props}>
+        {text}
+      </button>
+    );
+  }
+);
 
 export default Button;

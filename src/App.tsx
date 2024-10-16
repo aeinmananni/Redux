@@ -2,7 +2,7 @@ import { Provider } from "react-redux";
 import store from "./redux-store";
 import { Routes, Route } from "react-router-dom";
 import ControlCounter from "./components/controls";
-import TodoList from "./components/todo-list";
+import TodoList from "./components/todos";
 import Home from "./home";
 
 const App = () => {
