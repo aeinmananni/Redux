@@ -15,3 +15,21 @@ export const reset = () => {
     type: "reset",
   };
 };
+
+export const filterAllToDos = () => {
+  return {
+    type: "filterAllToDos",
+  };
+};
+
+export const filterCompletedToDosAction = () => {
+  return {
+    type: "filterCompletedToDosAction",
+  };
+};
+
+export const filterInCompletedToDos = () => {
+  return {
+    type: "filterInCompletedToDos",
+  };
+};

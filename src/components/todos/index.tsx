@@ -15,7 +15,7 @@ const TodoList = () => {
   const [infoObjects, setInfoObjects] = useState<InfoType>({
     text: "All",
     showModal: false,
-    state: ["contians", "not-completed", "All"],
+    state: ["completed", "InCompleted", "All"],
     inputValues: [],
   });
   useClickAway(divRef, (e) => {
