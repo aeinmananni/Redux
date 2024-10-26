@@ -1,10 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { increament, decreament, reset } from "../redux-store/actions";
+
 import Button from "../UI/button";
+import { decreament, increament, reset } from "../redux-store/actions-counter";
 
 const ControlCounter = () => {
   const dispatch = useDispatch();
-  const count = useSelector((s: { count: number }) => s.count);
+  const count = useSelector(
+    (state: { counter: { count: number } }) => state.counter.count
+  );
   return (
     <div className="h-full w-full flex flex-col justify-center items-center  gap-5  bg-sky-800 text-white p-3">
       <div className="flex gap-4 flex-col h-1/2 rounded-lg w-1/2  justify-center items-center bg-white">

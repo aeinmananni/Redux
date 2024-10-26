@@ -1,26 +1,43 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef } from "react";
 import Button from "../../UI/button";
 import Input from "../../UI/input";
 import { useClickAway } from "react-use";
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addToDos,
+  toggleModal,
+  setInputValue,
+  setError,
+} from "../../redux-store/actions-actionsTodos";
+import { TodoState } from "../../redux-store/redux-redusers/todos-reducers/todos-reducers";
 import SelectComponent from "./select-component";
-import { InfoType } from "../../models";
 import Modal from "./modal";
 import ToDosAddComponent from "./todos-add-components";
-
 const TodoList = () => {
   const divRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
-  const [inputValue, setInputValue] = useState<string>("");
-  const [error, setError] = useState<string>("");
-  const [infoObjects, setInfoObjects] = useState<InfoType>({
-    text: "All",
-    showModal: false,
-    state: ["completed", "InCompleted", "All"],
-    inputValues: [],
-  });
+  const dispatch = useDispatch();
+  const showModal = useSelector(
+    (state: { todos: TodoState }) => state.todos.infoObjects.showModal
+  );
+  const text = useSelector(
+    (state: { todos: TodoState }) => state.todos.infoObjects.text
+  );
+
+  const inputValues = useSelector(
+    (state: { todos: TodoState }) => state.todos.infoObjects.inputValues
+  );
+
+  const inputValue = useSelector(
+    (state: { todos: TodoState }) => state.todos.infoObjects.inputValue
+  );
+
+  const error = useSelector(
+    (state: { todos: TodoState }) => state.todos.infoObjects.error
+  );
   useClickAway(divRef, (e) => {
     if (buttonRef.current && !buttonRef.current?.contains(e.target as Node)) {
-      setInfoObjects((prev) => ({ ...prev, showModal: false }));
+      dispatch(toggleModal());
     }
   });
 
@@ -29,58 +46,38 @@ const TodoList = () => {
       <h1 className="text-3xl text-white">To Do List Project</h1>
       <div className="flex gap-6 justify-center items-center w-full relative">
         <Input
+          value={inputValue}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            if (e.target.value === "") {
-              setError("Is Input Not Empty");
+            if (e.target.value !== "") {
+              dispatch(setError(""));
             } else {
-              setInputValue(e.target.value);
-              setError("");
+              dispatch(setError("Is Not Input empty !"));
             }
+            dispatch(setInputValue(e.target.value));
           }}
           errorMessage={error && error}
           className="px-3 py-3 rounded-full outline-none focus:ring-2 focus:ring-yellow-400 ring-offset-2"
         />
         <Button
           onClick={() => {
-            if (inputValue === "") {
-              setError("Is Input Not Empty");
+            if (inputValue !== "") {
+              dispatch(addToDos(inputValue));
+              dispatch(setError(""));
+              dispatch(setInputValue(""));
             } else {
-              setInfoObjects((prev) => ({
-                ...prev,
-                inputValues: [...prev.inputValues, inputValue],
-              }));
-              setError("");
-              setInputValue("");
+              dispatch(setError("Is Not Input empty !"));
             }
           }}
           text="+"
           className="bg-white w-10 h-10 rounded-lg outline-none ring-4 ring-yellow-400 ring-offset-4"
         />
-        <SelectComponent
-          ref={buttonRef}
-          text={infoObjects.text}
-          onClick={() => {
-            setInfoObjects((prev) => ({
-              ...prev,
-              showModal: !infoObjects.showModal,
-            }));
-          }}
-        />
-        {infoObjects.showModal && (
-          <Modal
-            ref={divRef}
-            infoObjects={infoObjects}
-            setInfoObjects={setInfoObjects}
-          />
-        )}
+
+        <SelectComponent text={text} ref={buttonRef} />
+        {showModal && <Modal ref={divRef} />}
       </div>
-      {infoObjects.inputValues.length > 0 && (
-        <>
-          {infoObjects.inputValues.map((text, index) => (
-            <ToDosAddComponent key={index} text={text} />
-          ))}
-        </>
-      )}
+      {inputValues.map((text, index) => (
+        <ToDosAddComponent key={index} text={text} />
+      ))}
     </div>
   );
 };

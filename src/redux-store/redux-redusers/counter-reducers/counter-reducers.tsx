@@ -1,5 +1,3 @@
-import { createStore } from "redux";
-
 const initailState: { count: number } = {
   count: 0,
 };
@@ -18,6 +16,4 @@ const CounterValue = (state = initailState, action: { type: string }) => {
   }
 };
 
-const store = createStore(CounterValue);
-
-export default store;
+export default CounterValue;

@@ -1,5 +1,5 @@
 import { Provider } from "react-redux";
-import store from "./redux-store";
+import store from "./redux-store/stores";
 import { Routes, Route } from "react-router-dom";
 import ControlCounter from "./components/controls";
 import TodoList from "./components/todos";
