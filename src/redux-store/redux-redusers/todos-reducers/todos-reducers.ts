@@ -1,5 +1,5 @@
 import { InfoType } from "../../../models";
-import {  ADD_TEXT, ADD_TODOS, ERROR_MESSAGE, SET_INPUT_VALUE, TOGGLE_MODAL } from "../../actions-actionsTodos";
+import {  ADD_TEXT, ADD_TODOS, DELETE_TEXT, ERROR_MESSAGE, SET_INPUT_VALUE, TOGGLE_MODAL } from "../../actions-actionsTodos";
 
 export type TodoState = {
 
@@ -60,6 +60,14 @@ export type TodoState = {
                         ...state.infoObjects,
                         error:action.payload
                      }
+                  }
+                  case DELETE_TEXT : 
+                  return{
+                       ...state,
+                       infoObjects:{
+                        ...state.infoObjects,
+                        inputValues:state.infoObjects.inputValues.filter(it => it !== action.payload)
+                       }
                   }
            default:
             return state
