@@ -8,3 +8,19 @@ export type InfoType ={
         error:string
       
 }
+
+export type ProductStoreType = {
+         id:number,
+         title?:string,
+         exp:string,
+         price?:string
+}
+
+
+export type CommentsStoreType = {
+         id:number,
+         comment:string
+}
+
+
+export type ArticlesStoreType = Omit<ProductStoreType,"price">;

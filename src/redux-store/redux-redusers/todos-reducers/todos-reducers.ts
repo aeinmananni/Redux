@@ -18,7 +18,7 @@ export type TodoState = {
   };
 
   
-   const todoReducer = (state=initialState,action:{ type: string, payload?: string }) =>{
+   const todoReducer = (state=initialState,action:any) =>{
         switch(action.type){
            case TOGGLE_MODAL :
             return {
@@ -33,7 +33,7 @@ export type TodoState = {
                ...state,
                 infoObjects:{
                    ...state.infoObjects,
-                   text : action.payload
+                   text : action?.payload 
                 }
             }
             case ADD_TODOS:
@@ -74,28 +74,5 @@ export type TodoState = {
         }
    }
 
-  // const todoReducer = (state = initialState, action: any): TodoState => {
-  //   switch (action.type) {
-  //     case ADD_TODO:
-  //       return {
-  //         ...state,
-  //         infoObjects: {
-  //           ...state.infoObjects,
-  //           inputValues: [...state.infoObjects.inputValues, action.payload],
-  //         },
-  //       };
-  //     case SET_INPUT_VALUE:
-  //       return { ...state, inputValue: action.payload };
-  //     case SET_ERROR:
-  //       return { ...state, error: action.payload };
-  //     case TOGGLE_MODAL:
-  //       return {
-  //         ...state,
-  //         infoObjects: { ...state.infoObjects, showModal: !state.infoObjects.showModal },
-  //       };
-  //     default:
-  //       return state;
-  //   }
-  // };
 
   export default todoReducer;
