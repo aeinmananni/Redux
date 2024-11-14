@@ -6,8 +6,10 @@ type Action<T> = {
   payload: T;
 };
 
+const initailState: CommentsStoreType[] = [];
+
 export default function ReducerComments(
-  state: CommentsStoreType[],
+  state = initailState,
   actions: Action<CommentsStoreType | number>
 ) {
   switch (actions.type) {
@@ -19,5 +21,7 @@ export default function ReducerComments(
         (item) => item.id !== (actions.payload as number)
       );
     }
+    default:
+      return state;
   }
 }

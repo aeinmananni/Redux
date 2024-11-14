@@ -6,8 +6,10 @@ type Action<T> = {
   payload: T;
 };
 
+const initialState: ArticlesStoreType[] = [];
+
 export default function ReducerArticles(
-  state: ArticlesStoreType[],
+  state = initialState,
   actions: Action<ArticlesStoreType | number>
 ) {
   switch (actions.type) {
@@ -19,5 +21,7 @@ export default function ReducerArticles(
         (item) => item.id !== (actions.payload as number)
       );
     }
+    default:
+      return state;
   }
 }

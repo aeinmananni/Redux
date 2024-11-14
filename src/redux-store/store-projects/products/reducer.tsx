@@ -6,8 +6,10 @@ type Action<T> = {
   payload: T;
 };
 
+const initialState: ProductStoreType[] = [];
+
 export default function ReducerProducts(
-  state: ProductStoreType[],
+  state = initialState,
   actions: Action<ProductStoreType | number>
 ) {
   switch (actions.type) {
